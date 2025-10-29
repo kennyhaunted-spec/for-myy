@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тайное послание для Ангелочка 💌</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Great+Vibes&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff6b8b;
+            --secondary: #6a5af9;
+            --accent: #00cec9;
+            --dark: #2d3436;
+            --light: #fdcb6e;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Dancing Script', cursive;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Анимированный фон */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.7;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Основные секции */
+        .section {
+            min-height: 100vh;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .active {
+            display: flex;
+        }
+
+        /* Главная страница */
+        #main-page {
+            background: linear-gradient(45deg, #ff6b8b, #6a5af9, #00cec9);
+            background-size: 300% 300%;
+            animation: gradientShift 8s ease infinite;
+        }
+
+        .main-title {
+            font-size: 4.5rem;
+            color: white;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+            font-family: 'Pacifico', cursive;
+        }
+
+        .subtitle {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 3rem;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        .start-btn {
+            background: linear-gradient(45deg, var(--light), var(--accent));
+            border: none;
+            padding: 1.5rem 3rem;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Dancing Script', cursive;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .start-btn:hover {
+            transform: scale(1.1) rotate(-5deg);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Страница с загадками */
+        .puzzle-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            backdrop-filter: blur(10px);
+        }
+
+        .puzzle-title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-family: 'Great Vibes', cursive;
+        }
+
+        .puzzle-text {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.5rem;
+            border: 3px solid var(--primary);
+            border-radius: 15px;
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(0, 206, 201, 0.5);
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.3rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 107, 139, 0.4);
+        }
+
+        /* Галерея памяти */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin-top: 2rem;
+        }
+
+        .memory-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .memory-card:hover {
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .memory-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-family: 'Great Vibes', cursive;
+        }
+
+        .memory-text {
+            font-size: 1.4rem;
+            color: var(--dark);
+            line-height: 1.5;
+        }
+
+        /* Финальное послание */
+        #final-message {
+            background: linear-gradient(135deg, #fd79a8, #e17055, #fdcb6e);
+            background-size: 400% 400%;
+            animation: gradientShift 6s ease infinite;
+        }
+
+        .love-letter {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem;
+            border-radius: 20px;
+            max-width: 800px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+        }
+
+        .letter-title {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-family: 'Pacifico', cursive;
+        }
+
+        .letter-content {
+            font-size: 1.6rem;
+            color: var(--dark);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .secret-code {
+            background: var(--dark);
+            color: var(--light);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.4rem;
+            margin-top: 2rem;
+            font-family: monospace;
+        }
+
+        /* Анимации */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes confettiRain {
+            0% { transform: translateY(-100px) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        /* Конфетти */
+        .confetti {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            pointer-events: none;
+            opacity: 0.8;
+            animation: confettiRain 5s linear forwards;
+        }
+
+        /* Прогресс бар */
+        .progress-bar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            z-index: 1000;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .main-title { font-size: 3rem; }
+            .subtitle { font-size: 1.5rem; }
+            .puzzle-title { font-size: 2rem; }
+            .puzzle-text { font-size: 1.4rem; }
+            .letter-title { font-size: 2.5rem; }
+            .letter-content { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Плавающие сердечки -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- Прогресс бар -->
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+
+    <!-- Главная страница -->
+    <section id="main-page" class="section active">
+        <h1 class="main-title">Для Моего Ангелочка 👼</h1>
+        <p class="subtitle">Приготовься к волшебному путешествию...</p>
+        <button class="start-btn" onclick="startJourney()">Начать Приключение ✨</button>
+    </section>
+
+    <!-- Загадка 1 -->
+    <section id="puzzle1" class="section">
+        <div class="puzzle-container">
+            <h2 class="puzzle-title">Загадка Первая 💭</h2>
+            <p class="puzzle-text">Я начинаюсь с буквы «Л»,<br>
+                Кончаюсь на «Б» всегда.<br>
+                Во мне живёт твоя душа,<br>
+                Что это? Подскажи, родная!</p>
+            <input type="text" class="answer-input" id="answer1" placeholder="Твой ответ...">
+            <button class="submit-btn" onclick="checkAnswer(1)">Проверить 🔍</button>
+        </div>
+    </section>
+
+    <!-- Загадка 2 -->
+    <section id="puzzle2" class="section">
+        <div class="puzzle-container">
+            <h2 class="puzzle-title">Загадка Вторая 🎵</h2>
+            <p class="puzzle-text">Без него темно и грустно,<br>
+                С ним улыбки и мечты.<br>
+                Ты даришь его так искусно -<br>
+                Освещаешь все мои сны.</p>
+            <input type="text" class="answer-input" id="answer2" placeholder="Твой ответ...">
+            <button class="submit-btn" onclick="checkAnswer(2)">Проверить 🔍</button>
+        </div>
+    </section>
+
+    <!-- Галерея памяти -->
+    <section id="memory-gallery" class="section">
+        <div class="puzzle-container">
+            <h2 class="puzzle-title">Наша Галерея 💞</h2>
+            <div class="gallery">
+                <div class="memory-card" onclick="showMemory(1)">
+                    <h3 class="memory-title">Первая встреча ✨</h3>
+                    <p class="memory-text">Тот день, когда всё изменилось...</p>
+                </div>
+                <div class="memory-card" onclick="showMemory(2)">
+                    <h3 class="memory-title">Наши смех 😄</h3>
+                    <p class="memory-text">Моменты, когда время останавливалось</p>
+                </div>
+                <div class="memory-card" onclick="showMemory(3)">
+                    <h3 class="memory-title">Твои глаза 👀</h3>
+                    <p class="memory-text">В них можно утонуть навсегда...</p>
+                </div>
+                <div class="memory-card" onclick="showMemory(4)">
+                    <h3 class="memory-title">Мечты вместе 🌙</h3>
+                    <p class="memory-text">Все, что мы построим вместе!</p>
+                </div>
+            </div>
+            <button class="submit-btn" onclick="nextSection('final-message')" style="margin-top: 2rem;">Продолжить 🚀</button>
+        </div>
+    </section>
+
+    <!-- Финальное послание -->
+    <section id="final-message" class="section">
+        <div class="love-letter">
+            <h2 class="letter-title">Моей Любимой Ангелочек 💌</h2>
+            <div class="letter-content">
+                <p>Моя дорогая,</p>
+                <p>Каждый день с тобой - это подарок судьбы. Ты вошла в мою жизнь как яркая звезда, осветив всё вокруг.</p>
+                <p>Твоя улыбка заставляет мое сердце биться чаще, твой смех - самая прекрасная музыка, а твои глаза - целая вселенная, в которой я готов потеряться навсегда.</p>
+                <p>Спасибо тебе за каждый момент, за каждую эмоцию, за всё то счастье, что ты даришь мне просто своим существованием.</p>
+                <p>Я бесконечно благодарен судьбе за тебя и обещаю делать всё, чтобы ты всегда улыбалась.</p>
+                <p style="text-align: center; margin-top: 2rem; font-size: 2rem;">💖 Навсегда твой... 💖</p>
+            </div>
+            <div class="secret-code" id="secretCode">Тайный код: ANGEL777LOVE</div>
+            <button class="submit-btn" onclick="createConfetti()" style="margin-top: 2rem;">Запустить Фейерверк! 🎆</button>
+        </div>
+    </section>
+
+    <script>
+        // Создаем плавающие сердечки
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            const hearts = ['💖', '💕', '💞', '💓', '💗', '💘', '💝'];
+            
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 6 + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                container.appendChild(heart);
+            }
+        }
+
+        // Ответы на загадки
+        const answers = {
+            1: 'любовь',
+            2: 'свет'
+        };
+
+        // Текущая секция
+        let currentSection = 0;
+        const sections = ['main-page', 'puzzle1', 'puzzle2', 'memory-gallery', 'final-message'];
+
+        // Начать путешествие
+        function startJourney() {
+            nextSection('puzzle1');
+        }
+
+        // Перейти к следующей секции
+        function nextSection(sectionId) {
+            document.querySelector('.active').classList.remove('active');
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Обновляем прогресс бар
+            currentSection = sections.indexOf(sectionId);
+            const progress = (currentSection / (sections.length - 1)) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+        }
+
+        // Проверить ответ
+        function checkAnswer(puzzleNumber) {
+            const input = document.getElementById('answer' + puzzleNumber);
+            const answer = input.value.toLowerCase().trim();
+            
+            if (answer === answers[puzzleNumber]) {
+                // Правильный ответ
+                createHeartsExplosion();
+                setTimeout(() => {
+                    if (puzzleNumber === 1) {
+                        nextSection('puzzle2');
+                    } else if (puzzleNumber === 2) {
+                        nextSection('memory-gallery');
+                    }
+                }, 1500);
+            } else {
+                // Неправильный ответ
+                input.style.borderColor = '#ff4757';
+                input.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    input.style.animation = '';
+                }, 500);
+            }
+        }
+
+        // Показать воспоминание
+        function showMemory(number) {
+            const messages = [
+                "Помнишь нашу первую встречу? Как будто вчера это было...",
+                "Твой смех - мой самый любимый звук в мире!",
+                "Твои глаза - это отдельная история, в которую хочется погружаться снова и снова...",
+                "Мы столько всего построим вместе! Мечтаю об этом каждый день."
+            ];
+            alert(messages[number - 1]);
+        }
+
+        // Создать взрыв сердечек
+        function createHeartsExplosion() {
+            const hearts = ['💖', '💕', '💞', '💓', '💗'];
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-heart';
+                    heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.top = Math.random() * 100 + '%';
+                    heart.style.fontSize = (Math.random() * 25 + 20) + 'px';
+                    heart.style.animation = 'float 3s ease-in-out forwards';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3000);
+                }, i * 100);
+            }
+        }
+
+        // Создать конфетти
+        function createConfetti() {
+            const colors = ['#ff6b8b', '#6a5af9', '#00cec9', '#fdcb6e', '#fd79a8'];
+            
+            for (let i = 0; i < 150; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 5 + 's';
+                    confetti.style.width = (Math.random() * 15 + 8) + 'px';
+                    confetti.style.height = (Math.random() * 15 + 8) + 'px';
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 5000);
+                }, i * 30);
+            }
+        }
+
+        // Инициализация
+        createFloatingHearts();
+
+        // Добавляем анимацию shake
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px); }
+                75% { transform: translateX(10px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
